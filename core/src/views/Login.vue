@@ -22,7 +22,7 @@
 <template>
 	<div>
 		<transition name="fade" mode="out-in">
-			<div v-if="!resetPassword"
+			<div v-if="!resetPassword && resetPasswordTarget === ''"
 				 key="login">
 				<LoginForm
 					:username.sync="user"
@@ -56,6 +56,12 @@
 								   @abort="resetPassword = false"/>
 				</div>
 			</div>
+			<div v-else-if="resetPasswordTarget !== ''">
+				<UpdatePassword :username.sync="user"
+							   :reset-password-target="resetPasswordTarget"
+							   :inverted-colors="invertedColors"
+							   @done="resetPasswordTarget = ''"/>
+			</div>
 		</transition>
 	</div>
 </template>
@@ -63,6 +69,7 @@
 <script>
 	import LoginForm from '../components/login/LoginForm.vue'
 	import ResetPassword from '../components/login/ResetPassword.vue'
+	import UpdatePassword from '../components/login/UpdatePassword.vue'
 
 	export default {
 		name: 'Login',
@@ -92,6 +99,9 @@
 			resetPasswordLink: {
 				type: String,
 			},
+			resetPasswordTarget: {
+				type: String,
+			},
 			invertedColors: {
 				type: Boolean,
 				default: false,
@@ -104,6 +114,7 @@
 		components: {
 			LoginForm,
 			ResetPassword,
+			UpdatePassword,
 		},
 		data () {
 			return {
