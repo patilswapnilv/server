@@ -22,12 +22,12 @@
 
 <template>
 	<li class="sharing-entry">
-		<Avatar class="sharing-entry__avatar" />
+		<slot name="avatar" />
 		<div class="sharing-entry__desc" v-tooltip="tooltip">
 			<h4>{{ title }}</h4>
 			<p v-if="subtitle">{{ subtitle }}</p>
 		</div>
-		<Actions menu-align="right" class="sharing-entry__actions">
+		<Actions v-if="$slots['default']" menu-align="right" class="sharing-entry__actions">
 			<slot />
 		</Actions>
 	</li>
@@ -38,10 +38,8 @@ import Avatar from 'nextcloud-vue/dist/Components/Avatar'
 import Actions from 'nextcloud-vue/dist/Components/Actions'
 import Tooltip from 'nextcloud-vue/dist/Directives/Tooltip'
 
-import Share from '../models/Share'
-
 export default {
-	name: 'SharingEntry',
+	name: 'SharingEntrySimple',
 
 	components: {
 		Actions,
@@ -53,59 +51,20 @@ export default {
 	},
 
 	props: {
-		fileInfo: {
-			type: Object,
-			default: () => {},
+		title: {
+			type: String,
+			default: '',
 			required: true
 		},
-		share: {
-			type: Share,
-			required: true,
-			default: () => new Share({})
+		tooltip: {
+			type: String,
+			default: ''
+		},
+		subtitle: {
+			type: String,
+			default: ''
 		}
-	},
-
-	data() {
-		return {
-			
-		}
-	},
-
-	computed: {
-		// title() {
-		// 	if (share.type === SHARE_TYPES.SHARE_TYPE_GROUP) {
-		// 		// adding group info
-		// 		return `${share.shareWithDisplayName} (group)`
-		// 	} else if (share.type === SHARE_TYPES.SHARE_TYPE_GROUP)
-		// }
-		// // GROUP AND USER
-		// 		if (share.type === SHARE_TYPES.SHARE_TYPE_USER
-		// 			|| share.type === SHARE_TYPES.SHARE_TYPE_GROUP) {
-		// 			result.user = share.shareWith
-		// 			result.displayName = share.shareWithDisplayName
-		// 			result.title = share.shareWithDisplayName
-
-		// 			// If the file owner is not the share owner,
-		// 			// we show who created the share
-		// 			if (share.owner !== share.fileOwner) {
-		// 				result.tooltip = t('files_sharing', 'Shared with {user} by {owner}', { user: share.shareWithDisplayName, owner: share.owner })
-		// 			}
-		// 		}
-
-		// 		// GROUP
-		// 		if (share.type === SHARE_TYPES.SHARE_TYPE_GROUP) {
-		// 			// adding group info
-		// 			result.title += ' (group)'
-		// 		}
-
-		// 		// always forward the id
-		// 		result.id = share.id
-		// 		return result
-	},
-
-	methods: {
-		
-	},
+	}
 
 }
 </script>

@@ -31,11 +31,11 @@
 		<!-- shares content -->
 		<template v-else>
 			<!-- shared with me information -->
-			<SharingEntry v-if="isSharedWithMe" v-bind="sharedWithMe">
+			<SharingEntrySimple v-if="isSharedWithMe" v-bind="sharedWithMe">
 				<template #avatar>
-					<Avatar :user="sharedWithMe.user" :display-name="sharedWithMe.displayName" class="sharing-entry__avatar" tooltipMessage="" />
+					<Avatar #avatar :user="sharedWithMe.user" :display-name="sharedWithMe.displayName" class="sharing-entry__avatar" tooltipMessage="" />
 				</template>
-			</SharingEntry>
+			</SharingEntrySimple>
 
 			<!-- add new share input -->
 			<SharingInput :shares="shares" :file-info="fileInfo" :reshare="reshare" />
@@ -44,7 +44,7 @@
 			<SharingLinkList :shares="linkShares" :file-info="fileInfo" />
 
 			<!-- other shares list -->
-			<SharingEntry v-for="share in filteredShares" v-bind="share" :key="share.id"></SharingEntry>
+			<SharingList :shares="shares" :file-info="fileInfo" />
 
 			<!-- internal link copy -->
 			<SharingEntryInternal :file-info="fileInfo" />
@@ -63,11 +63,12 @@ import axios from 'nextcloud-axios'
 
 import { shareWithTitle } from '../utils/SharedWithMe'
 import Share from '../models/Share'
-import SharingEntry from '../components/SharingEntry'
-import SharingEntryLink from '../components/SharingEntryLink'
 import SharingEntryInternal from '../components/SharingEntryInternal'
+import SharingEntrySimple from '../components/SharingEntrySimple'
 import SharingInput from '../components/SharingInput'
+
 import SharingLinkList from './SharingLinkList'
+import SharingList from './SharingList'
 
 const SHARE_TYPES = {
 	SHARE_TYPE_USER: OC.Share.SHARE_TYPE_USER, 
@@ -89,10 +90,11 @@ export default {
 		ActionCheckbox,
 		ActionLink,
 		Avatar,
-		SharingEntry,
 		SharingEntryInternal,
+		SharingEntrySimple,
 		SharingInput,
 		SharingLinkList,
+		SharingList,
 		Tab
 	},
 
@@ -147,40 +149,10 @@ export default {
 		 */
 		isSharedWithMe() {
 			return Object.keys(this.sharedWithMe).length > 0
-		},
-
-		filteredShares() {
-			return this.shares.map(share => {
-				const result  = {}
-
-				// GROUP AND USER
-				if (share.type === SHARE_TYPES.SHARE_TYPE_USER
-					|| share.type === SHARE_TYPES.SHARE_TYPE_GROUP) {
-					result.user = share.shareWith
-					result.displayName = share.shareWithDisplayName
-					result.title = share.shareWithDisplayName
-
-					// If the file owner is not the share owner,
-					// we show who created the share
-					if (share.owner !== share.fileOwner) {
-						result.tooltip = t('files_sharing', 'Shared with {user} by {owner}', { user: share.shareWithDisplayName, owner: share.owner })
-					}
-				}
-
-				// GROUP
-				if (share.type === SHARE_TYPES.SHARE_TYPE_GROUP) {
-					// adding group info
-					result.title += ' (group)'
-				}
-
-				// always forward the id
-				result.id = share.id
-				return result
-			})
 		}
 	},
 
-	mounted() {
+	beforeMount() {
 		this.getShares()
 	},
 

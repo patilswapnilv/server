@@ -22,18 +22,18 @@
 
 <template>
 	<li :class="{'sharing-entry--share': share}" class="sharing-entry">
-		<Avatar :isNoUser="true" class="sharing-entry__avatar icon-public-white"></Avatar>
+		<Avatar :isNoUser="true" class="sharing-entry__avatar icon-public-white" />
 		<div class="sharing-entry__desc">
 			<h4>{{ title }}</h4>
 		</div>
 
-		<!-- clipboSelectard -->
-		<Actions reSelectf="copyButton" v-if="share && share.token"
-			:disablSelecte-tooltip="true" class="sharing-entry__copy"
-			v-tooltSelectip.auto="{
-				// Selectmake sure to manually show the tooltip aagain after click
-				// Selectas it will take away the focus and close the tooltip
-				shoSelectw: copied,
+		<!-- clipboard -->
+		<Actions ref="copyButton" v-if="share && share.token"
+			:disable-tooltip="true" class="sharing-entry__copy"
+			v-tooltip.auto="{
+				// make sure to manually show the tooltip aagain after click
+				// as it will take away the focus and close the tooltip
+				show: copied,
 				content: clipboardTooltip,
 				trigger: copied ? 'manual' : 'hover'
 			}">

@@ -1,25 +1,25 @@
 
 <template>
-	<SharingEntry :title="t('files_sharing', 'Copy internal link')"
+	<SharingEntrySimple :title="t('files_sharing', 'Copy internal link')"
 		:subtitle="internalLinkSubtitle">
 		<template #avatar>
 			<div class="avatar-external icon-external-white"></div>
 		</template>
 		<ActionLink :href="internalLink" target="_blank" icon="icon-clippy" @click.stop.prevent="copyLink">{{ clipboardTooltip }}</ActionLink>
-	</SharingEntry>
+	</SharingEntrySimple>
 </template>
 
 <script>
 import { generateUrl } from 'nextcloud-router/dist/index'
 import ActionLink from 'nextcloud-vue/dist/Components/ActionLink'
-import SharingEntry from './SharingEntry'
+import SharingEntrySimple from './SharingEntrySimple'
 
 export default {
 	name: 'SharingEntryInternal',
 
 	components: { 
 		ActionLink,
-		SharingEntry
+		SharingEntrySimple
 	},
 
 	props: {
@@ -89,13 +89,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.avatar-external {
-	width: 32px;
-	height: 32px;
-	line-height: 32px;
-	font-size: 18px;
-	background-color: var(--color-text-maxcontrast);
-	border-radius: 50%;
-	flex-shrink: 0;
+.sharing-entry {
+	display: flex;
+	align-items: center;
+	height: 44px;
+	&__desc {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		padding: 8px;
+		line-height: 1.2em;
+		p {
+			color: var(--color-text-maxcontrast);
+		}
+	}
+	&__actions {
+		margin-left: auto;
+	}
+	.avatar-external {
+		width: 32px;
+		height: 32px;
+		line-height: 32px;
+		font-size: 18px;
+		background-color: var(--color-text-maxcontrast);
+		border-radius: 50%;
+		flex-shrink: 0;
+	}
 }
 </style>

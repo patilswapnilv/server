@@ -21,13 +21,41 @@
   -->
 
 <template>
-	
+	<ul>
+		<SharingEntry v-for="share in shares" :key="share.id" :file-info="fileInfo" :share="share" />
+	</ul>
 </template>
 
 <script>
+import SharingEntry from '../components/SharingEntry'
+
 export default {
-	name:  'SharingPublic',
+	name: 'SharingList',
+
+	components: {
+		SharingEntry
+	},
+
+	props: {
+		fileInfo: {
+			type: Object,
+			default: () => {},
+			required: true
+		},
+		shares: {
+			type: Array,
+			default: () => [],
+			required: true
+		}
+	},
+
+	computed: {
+		hasShares() {
+			return this.shares.length === 0
+		}
+	},
+
+	methods: {
+	}
 }
 </script>
-  
-  
