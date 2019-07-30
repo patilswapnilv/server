@@ -36,7 +36,7 @@ namespace OCP\AppFramework\Http;
  * @package OCP\AppFramework\Http
  * @since 17.0.0
  */
-class FeaturePolicy extends EmptryFeaturePolicy {
+class FeaturePolicy extends EmptyFeaturePolicy {
 	protected $autoplayDomains = [
 		'\'self\'',
 	];
