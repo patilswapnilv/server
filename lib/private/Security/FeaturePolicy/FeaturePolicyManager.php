@@ -24,13 +24,13 @@ declare(strict_types=1);
 
 namespace OC\Security\FeaturePolicy;
 
-use OCP\AppFramework\Http\EmptryFeaturePolicy;
+use OCP\AppFramework\Http\EmptyFeaturePolicy;
 use OCP\AppFramework\Http\FeaturePolicy;
 use OCP\EventDispatcher\IEventDispatcher;
 use OCP\Security\FeaturePolicy\AddFeaturePolicyEvent;
 
 class FeaturePolicyManager {
-	/** @var EmptryFeaturePolicy[] */
+	/** @var EmptyFeaturePolicy[] */
 	private $policies = [];
 
 	/** @var IEventDispatcher */
@@ -40,7 +40,7 @@ class FeaturePolicyManager {
 		$this->dispatcher = $dispatcher;
 	}
 
-	public function addDefaultPolicy(EmptryFeaturePolicy $policy): void {
+	public function addDefaultPolicy(EmptyFeaturePolicy $policy): void {
 		$this->policies[] = $policy;
 	}
 
@@ -60,7 +60,7 @@ class FeaturePolicyManager {
 	 *
 	 */
 	public function mergePolicies(FeaturePolicy $defaultPolicy,
-								  EmptryFeaturePolicy $originalPolicy): FeaturePolicy {
+								  EmptyFeaturePolicy $originalPolicy): FeaturePolicy {
 		foreach ((object)(array)$originalPolicy as $name => $value) {
 			$setter = 'set' . ucfirst($name);
 			if (\is_array($value)) {
