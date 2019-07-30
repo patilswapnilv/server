@@ -24,8 +24,8 @@ declare(strict_types=1);
 
 namespace OC\Security\FeaturePolicy;
 
+use OC\Security\FeaturePolicy\FeaturePolicy;
 use OCP\AppFramework\Http\EmptyFeaturePolicy;
-use OCP\AppFramework\Http\FeaturePolicy;
 use OCP\EventDispatcher\IEventDispatcher;
 use OCP\Security\FeaturePolicy\AddFeaturePolicyEvent;
 
@@ -44,7 +44,7 @@ class FeaturePolicyManager {
 		$this->policies[] = $policy;
 	}
 
-		public function getDefaultPolicy(): FeaturePolicy {
+	public function getDefaultPolicy(): FeaturePolicy {
 		$event = new AddFeaturePolicyEvent($this);
 		$this->dispatcher->dispatch(AddFeaturePolicyEvent::class, $event);
 
