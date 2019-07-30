@@ -145,8 +145,13 @@ body {
 
 /* SCROLLING */
 
+html, body {
+	scrollbar-color: var(--color-border-dark) transparent;
+	scrollbar-width: thin;
+}
+
 ::-webkit-scrollbar {
-	width: 9px;
+	width: 6px;
 	height: 5px;
 }
 
@@ -155,9 +160,10 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-	background: var(--color-background-darker);
+	background: var(--color-border-dark);
 	border-radius: var(--border-radius);
 }
+
 
 /* SELECTION */
 
