@@ -25,7 +25,7 @@ declare(strict_types=1);
 namespace OCP\Security\FeaturePolicy;
 
 use OC\Security\FeaturePolicy\FeaturePolicyManager;
-use OCP\AppFramework\Http\EmptryFeaturePolicy;
+use OCP\AppFramework\Http\EmptyFeaturePolicy;
 use OCP\EventDispatcher\Event;
 
 /**
@@ -43,7 +43,7 @@ class AddFeaturePolicyEvent extends Event {
 	/**
 	 * @since 17.0.0
 	 */
-	public function addPolicy(EmptryFeaturePolicy $policy) {
+	public function addPolicy(EmptyFeaturePolicy $policy) {
 		$this->policyManager->addDefaultPolicy($policy);
 	}
 }
